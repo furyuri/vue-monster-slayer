@@ -1,0 +1,4 @@
+name: vue-monster-slayer
+recipe: lamp
+config:
+  webroot: .
