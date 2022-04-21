@@ -26,12 +26,12 @@
       <section id="player" class="container">
         <h2>Your Health</h2>
         <div class="healthbar">
-          <div class="healthbar__value"></div>
+          <div class="healthbar__value" :style="playerBarStyles"></div>
         </div>
       </section>
       <section id="controls">
         <button @click="attackMonster">ATTACK</button>
-        <button>SPECIAL ATTACK</button>
+        <button @click="specialAttackMonster" :disabled="specialAtk">SPECIAL ATTACK</button>
         <button>HEAL</button>
         <button>SURRENDER</button>
       </section>
@@ -39,6 +39,8 @@
         <h2>Battle Log</h2>
         <ul></ul>
       </section>
+      {{ round }}
+      {{ this.round % 3 === 0 }}
     </div>
   </body>
 </html>
