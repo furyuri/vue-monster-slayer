@@ -6,6 +6,7 @@ const app = Vue.createApp({
     data() {
         return {
             round: 0,
+            special: false,
             monsterMaxHP: 150,
             monsterHP: 150,
             playerMaxHP: 100,
@@ -24,7 +25,10 @@ const app = Vue.createApp({
             }
         },
         specialAtk() {
-            return !(this.round % 3 === 0);
+            if (this.special < 1 && this.round % 3 === 0 && this.round != 0) {
+                this.special = 1;
+            }
+            return !this.special == 1;
         }
     },
     methods: {
@@ -36,6 +40,7 @@ const app = Vue.createApp({
         specialAttackMonster() {
             this.monsterHP -= randomAttackGen(8, 20);
             this.attackPlayer();
+            this.special = 0;
             this.round++;
         },        
         attackPlayer() {

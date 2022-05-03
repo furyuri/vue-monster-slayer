@@ -31,7 +31,7 @@
       </section>
       <section id="controls">
         <button @click="attackMonster">ATTACK</button>
-        <button @click="specialAttackMonster" :disabled="specialAtk">SPECIAL ATTACK</button>
+        <button @click="specialAttackMonster" :class="{ 'special-atk': special }" :disabled="specialAtk">SPECIAL ATTACK</button>
         <button>HEAL</button>
         <button>SURRENDER</button>
       </section>
@@ -39,8 +39,12 @@
         <h2>Battle Log</h2>
         <ul></ul>
       </section>
-      {{ round }}
-      {{ this.round % 3 === 0 }}
+      {{ round }}<br>
+      {{ this.round % 3 === 0 }}<br>
+      Special: 
+      {{ this.special }}<br>
+      Condition:
+      {{ !this.special == 1 }}
     </div>
   </body>
 </html>
