@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vue Basics</title>
+    <title>Monster Slayer</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
       rel="stylesheet"
@@ -29,11 +29,14 @@
           <div class="healthbar__value" :style="playerBarStyles"></div>
         </div>
       </section>
+      <section class="container" v-if="winner">
+        <h2>Game Over!</h2>
+      </section>
       <section id="controls">
-        <button @click="attackMonster">ATTACK</button>
+        <button @click="attackMonster" :disabled="activeGame">ATTACK</button>
         <button @click="specialAttackMonster" :class="{ 'special-atk': special }" :disabled="specialAtk">SPECIAL ATTACK</button>
-        <button>HEAL</button>
-        <button>SURRENDER</button>
+        <button @click="healPlayer" :disabled="activeGame">HEAL</button>
+        <button :disabled="activeGame">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
