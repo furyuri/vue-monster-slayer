@@ -40,11 +40,9 @@
         <ul></ul>
       </section>
       {{ round }}<br>
-      {{ this.round % 3 === 0 }}<br>
-      Special: 
-      {{ this.special }}<br>
-      Condition:
-      {{ !this.special == 1 }}
+      {{ playerHP }}
+      <br>
+      {{ this.playerHP / this.playerMaxHP * 100 }}
     </div>
   </body>
 </html>

@@ -7,6 +7,7 @@ const app = Vue.createApp({
         return {
             round: 0,
             special: false,
+            limit_break: 0,
             monsterMaxHP: 150,
             monsterHP: 150,
             playerMaxHP: 100,
@@ -25,26 +26,35 @@ const app = Vue.createApp({
             }
         },
         specialAtk() {
-            if (this.special < 1 && this.round % 3 === 0 && this.round != 0) {
-                this.special = 1;
+            // used to disable the "SPECIAL ATTACK" button
+            if (this.limit_break % 3 === 0 && this.limit_break != 0) {
+                this.special = true;
             }
-            return !this.special == 1;
+            // if user doesn't have special available, then send 'true' value to 'disabled' attribute.
+            return !this.special == true;
         }
     },
     methods: {
         attackMonster() {
             this.monsterHP -= randomAttackGen(7, 15);
+            if (this.monsterHP < 0 ) {
+                this.monsterHP = 0;
+            }            
             this.attackPlayer();
             this.round++;
+            this.limit_break++;
         },
         specialAttackMonster() {
             this.monsterHP -= randomAttackGen(8, 20);
             this.attackPlayer();
             this.special = 0;
-            this.round++;
+            this.limit_break = 0;
         },        
         attackPlayer() {
             this.playerHP -= randomAttackGen(5, 12);
+            if (this.playerHP < 0 ) {
+                this.playerHP = 0;
+            }            
         }
     }
 });

@@ -117,7 +117,7 @@ button:disabled {
 .log--heal {
   color: green;
 }
-.special-atk { 
+.special-atk:not([disabled='true']) { 
   left:0;
   right: 0;
   top: 0;
