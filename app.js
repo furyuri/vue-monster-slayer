@@ -53,17 +53,17 @@ const app = Vue.createApp({
     },
     watch: {
         playerHP(value) {
-            if (value <= 0 && this.monsterHP > 0) {
-                this.winner = 'monster';
-            } else if (value <= 0 && this.monsterHP <= 0) {
+            if (value <= 0 && this.monsterHP <= 0) {
                 this.winner = 'draw';
-            } 
+            } else if (value <= 0) {
+                this.winner = 'monster';
+            }
         },
         monsterHP(value) {
-            if (value <=0 && this.playerHP > 0) {
-                this.winner = 'player';
-            } else if (value <=0 && this.playerHP <= 0) {
+            if (value <=0 && this.playerHP <= 0) {
                 this.winner = 'draw';
+            } else if (value <=0) {
+                this.winner = 'player';
             } 
         },
         winner(value) {
@@ -103,6 +103,9 @@ const app = Vue.createApp({
             }
             this.attackPlayer();
             this.round++;         
+        },
+        surrender() {
+            this.winner = 'monster';
         }
     }
 });

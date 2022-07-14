@@ -36,20 +36,16 @@
         <h3 v-if="winner === 'draw'">It's a draw!</h3>
         <button @click="startGame">Start a new game</button>
       </section>
-      <section id="controls">
-        <button @click="attackMonster" :disabled="activeGame">ATTACK</button>
+      <section id="controls" v-if="!winner">
+        <button @click="attackMonster">ATTACK</button>
         <button @click="specialAttackMonster" :class="{ 'special-atk': special }" :disabled="specialAtk">SPECIAL ATTACK</button>
-        <button @click="healPlayer" :disabled="activeGame">HEAL</button>
-        <button :disabled="activeGame">SURRENDER</button>
+        <button @click="healPlayer">HEAL</button>
+        <button @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
         <ul></ul>
       </section>
-      {{ round }}<br>
-      Monster HP : {{ monsterHP }}<br>
-      Player HP : {{ playerHP }}<br>
-      {{ this.playerHP / this.playerMaxHP * 100 }}
     </div>
   </body>
 </html>
