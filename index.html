@@ -31,6 +31,10 @@
       </section>
       <section class="container" v-if="winner">
         <h2>Game Over!</h2>
+        <h3 v-if="winner === 'monster'">You lost!</h3>
+        <h3 v-if="winner === 'player'">You Won!</h3>
+        <h3 v-if="winner === 'draw'">It's a draw!</h3>
+        <button @click="startGame">Start a new game</button>
       </section>
       <section id="controls">
         <button @click="attackMonster" :disabled="activeGame">ATTACK</button>
@@ -43,8 +47,8 @@
         <ul></ul>
       </section>
       {{ round }}<br>
-      {{ playerHP }}
-      <br>
+      Monster HP : {{ monsterHP }}<br>
+      Player HP : {{ playerHP }}<br>
       {{ this.playerHP / this.playerMaxHP * 100 }}
     </div>
   </body>

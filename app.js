@@ -18,11 +18,21 @@ const app = Vue.createApp({
     },
     computed: {
         monsterBarStyles() {
+            if (this.monsterHP < 0) {
+                return {
+                    width: "0%"
+                }
+            }
             return {
                 width: (this.monsterHP / this.monsterMaxHP * 100) + "%"
             }
         },
         playerBarStyles() {
+            if (this.playerHP < 0) {
+                return {
+                    width: "0%"
+                }
+            }            
             return {
                 width: (this.playerHP / this.playerMaxHP * 100) + "%"
             }
@@ -43,19 +53,17 @@ const app = Vue.createApp({
     },
     watch: {
         playerHP(value) {
-            if (value <= 0 && this.monsterHP <= 0) {
-                this.winner = 'draw';
-            } else if (value <= 0) {
-                this.playerHP = 0; // Set to zero as negative CSS percentages don't work
+            if (value <= 0 && this.monsterHP > 0) {
                 this.winner = 'monster';
-            }
+            } else if (value <= 0 && this.monsterHP <= 0) {
+                this.winner = 'draw';
+            } 
         },
         monsterHP(value) {
-            if (value <=0 && this.playerHP <= 0) {
-                this.winner = 'draw';
-            } else if (value <=0) {
-                this.monsterHP = 0; // Set to zero as negative CSS percentages don't work
+            if (value <=0 && this.playerHP > 0) {
                 this.winner = 'player';
+            } else if (value <=0 && this.playerHP <= 0) {
+                this.winner = 'draw';
             } 
         },
         winner(value) {
@@ -65,6 +73,12 @@ const app = Vue.createApp({
         }
     },
     methods: {
+        startGame() {
+            this.playerHP = this.playerMaxHP;
+            this.monsterHP = this.monsterMaxHP;
+            this.round = 0;
+            this.winner = null;
+        },
         attackMonster() {
             this.monsterHP -= getRandomNum(7, 15);         
             this.attackPlayer();
