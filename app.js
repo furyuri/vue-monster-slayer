@@ -14,6 +14,7 @@ const app = Vue.createApp({
             playerHP: 100,
             winner: null,
             active_game: true,
+            logMessages: [],
         };
     },
     computed: {
@@ -45,11 +46,6 @@ const app = Vue.createApp({
             // if user doesn't have special available, then send 'true' value to 'disabled' attribute.
             return !this.special == true;
         },
-        activeGame() {
-            if (this.winner) {
-                return !this.active_game == false;
-            }
-        }
     },
     watch: {
         playerHP(value) {
@@ -78,21 +74,28 @@ const app = Vue.createApp({
             this.monsterHP = this.monsterMaxHP;
             this.round = 0;
             this.winner = null;
+            this.logMessages = [];
         },
         attackMonster() {
-            this.monsterHP -= getRandomNum(7, 15);         
+            const attackValue = getRandomNum(7, 15);
+            this.monsterHP -= attackValue;
+            this.addLogMessage('player', 'attacks', attackValue);    
             this.attackPlayer();
             this.round++;
             this.limit_break++;
         },
         specialAttackMonster() {
-            this.monsterHP -= getRandomNum(8, 20);
+            const attackValue = getRandomNum(8, 20);
+            this.monsterHP -= attackValue;
+            this.addLogMessage('player', 'attacks', attackValue);
             this.attackPlayer();
             this.special = 0;
             this.limit_break = 0;
         },        
         attackPlayer() {
-            this.playerHP -= getRandomNum(5, 12);     
+            const attackValue = getRandomNum(5, 12)
+            this.playerHP -= attackValue;
+            this.addLogMessage('monster', 'attacks', attackValue);    
         },
         healPlayer() {
             const healValue = getRandomNum(8, 20);
@@ -101,11 +104,19 @@ const app = Vue.createApp({
             } else {
                 this.playerHP += healValue;
             }
+            this.addLogMessage('player', 'heal', healValue);
             this.attackPlayer();
             this.round++;         
         },
         surrender() {
             this.winner = 'monster';
+        },
+        addLogMessage(who, action, value) {
+            this.logMessages.unshift({
+                who: who,
+                action: action,
+                value: value
+            });
         }
     }
 });

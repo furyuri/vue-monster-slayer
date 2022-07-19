@@ -38,13 +38,31 @@
       </section>
       <section id="controls" v-if="!winner">
         <button @click="attackMonster">ATTACK</button>
-        <button @click="specialAttackMonster" :class="{ 'special-atk': special }" :disabled="specialAtk">SPECIAL ATTACK</button>
+        <button @click="specialAttackMonster" 
+        class="limit-break-bar" 
+        :class="{ 
+          'special-atk': special, 
+          'limit-1' : limit_break === 1, 
+          'limit-2' : limit_break === 2, 
+        }" :disabled="specialAtk">SPECIAL ATTACK</button>
         <button @click="healPlayer">HEAL</button>
         <button @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="message in logMessages">
+            <span :class="{'log--player': message.who === 'player', 'log--monster': message.who === 'monster'}">{{ message.who }}</span>
+            <span v-if="message.action === 'heal'">
+              heals themselves for 
+              <span class="log--heal">{{ message.value }}</span>
+            </span>
+            <span v-else>
+              attacks & deals 
+              <span class="log--damage">{{ message.value }}</span>
+            </span>
+          </li>
+        </ul>
       </section>
     </div>
   </body>
